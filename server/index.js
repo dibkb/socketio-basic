@@ -3,11 +3,23 @@ import http from "http";
 import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
-const io = new Server(httpServer, {
-  /* options */
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+  },
+});
+io.use((socket, next) => {
+  const { username } = socket.handshake.auth;
+  if (!username) {
+    return next(new Error("invalid username"));
+  }
+  socket.username = username;
+  next();
 });
 io.on("connection", (socket) => {
-  console.log("socket", socket);
+  socket.on("send-message", (payload) => {
+    console.log(payload);
+  });
 });
 server.listen(8080, () => {
   console.log("Runing on port 8080");
