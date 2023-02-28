@@ -12,8 +12,11 @@ const MessageBody = ({ messages }) => {
       );
     } else {
       return (
-        <div className="bg-slate-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-start">
-          {message.text}
+        <div className="bg-slate-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-start flex flex-col">
+          <small className="text-slate-400 text-xs font-thin">
+            {message.sender}
+          </small>
+          <span>{message.text}</span>
         </div>
       );
     }
