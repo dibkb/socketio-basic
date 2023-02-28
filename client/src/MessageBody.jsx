@@ -11,7 +11,11 @@ const MessageBody = ({ messages }) => {
         </div>
       );
     } else {
-      return <div>{message.text}</div>;
+      return (
+        <div className="bg-slate-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-start">
+          {message.text}
+        </div>
+      );
     }
   });
   return (
