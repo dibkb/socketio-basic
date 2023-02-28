@@ -11,6 +11,7 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   socket.on("message", (data) => {
     console.log(data);
+    socket.emit("messageResponse", data);
   });
 });
 server.listen(8080, () => {

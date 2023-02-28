@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 const ChatSection = ({ socket }) => {
   const [userName] = useState(localStorage.getItem("username"));
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
+  const [allMessages, setAllMessages] = useState([]);
   const submitFormHandler = (e) => {
     console.log(socket);
     e.preventDefault();
@@ -10,11 +11,17 @@ const ChatSection = ({ socket }) => {
       sender: userName,
       socketID: socket.id,
     });
+    setMessage("");
   };
+  useEffect(() => {
+    socket.on("messageResponse", (data) => {
+      setAllMessages([...allMessages, data]);
+    });
+  }, [socket, allMessages]);
   return (
     <>
       {userName}
-      <div></div>
+      <div>{JSON.stringify(allMessages)}</div>
       <form action="" onSubmit={submitFormHandler}>
         <input
           type="text"
