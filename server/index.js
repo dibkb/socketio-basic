@@ -8,7 +8,7 @@ const io = new Server(server, {
     origin: "http://localhost:5173",
   },
 });
-let users = [];
+const users = [];
 io.on("connection", (socket) => {
   socket.on("message", (data) => {
     console.log(data);
@@ -21,7 +21,8 @@ io.on("connection", (socket) => {
   });
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");
-    users = users.filter((user) => user.socketID !== socket.id);
+    console.log(users);
+    // users = users.filter((user) => user.socketID !== socket.id);
     io.emit("newUserResponse", users);
     socket.disconnect();
   });

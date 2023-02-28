@@ -8,6 +8,8 @@ const ChatSection = ({ socket }) => {
   useEffect(() => {
     const userName = localStorage.getItem("username");
     if (!userName) return navigate("/");
+    else {
+    }
   }, []);
   const [users, setUsers] = useState([]);
   const [allMessages, setAllMessages] = useState([]);
@@ -18,6 +20,7 @@ const ChatSection = ({ socket }) => {
   }, [socket, allMessages]);
   useEffect(() => {
     socket.on("newUserResponse", (data) => setUsers(data));
+    console.log("user response");
   }, [socket, users]);
   return (
     <div className="flex h-screen">
