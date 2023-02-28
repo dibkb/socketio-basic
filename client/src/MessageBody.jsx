@@ -3,20 +3,21 @@ import React from "react";
 const MessageBody = ({ messages }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
   const content = messages.map((message, index) => {
-    return (
-      <div
-        className={
-          userName === message.sender ? "message__block__own" : "message__block"
-        }
-      >
-        {message.text}
-      </div>
-    );
+    if (userName === message.sender) {
+      // own message
+      return (
+        <div className="bg-blue-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-end">
+          {message.text}
+        </div>
+      );
+    } else {
+      return <div>{message.text}</div>;
+    }
   });
   return (
-    <div className="flex-grow">
+    <div className="flex-grow flex flex-col p-4">
+      <span className="text-xl font-semibold">Loged in as : {userName}</span>
       {content}
-      message body
     </div>
   );
 };

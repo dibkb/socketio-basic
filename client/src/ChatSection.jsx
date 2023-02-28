@@ -8,7 +8,6 @@ const ChatSection = ({ socket }) => {
   const [allMessages, setAllMessages] = useState([]);
   useEffect(() => {
     socket.on("messageResponse", (data) => {
-      console.log(data);
       setAllMessages([...allMessages, data]);
     });
   }, [socket, allMessages]);
@@ -17,7 +16,7 @@ const ChatSection = ({ socket }) => {
       <Chatbar />
       <div className="flex flex-col h-screen w-full">
         <MessageBody messages={allMessages} />
-        <Chatfooter />
+        <Chatfooter socket={socket} />
       </div>
     </div>
   );

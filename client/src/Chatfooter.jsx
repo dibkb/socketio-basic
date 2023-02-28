@@ -1,5 +1,5 @@
 import React from "react";
-const Chatfooter = () => {
+const Chatfooter = ({ socket }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
   const [message, setMessage] = React.useState("");
   const submitFormHandler = (e) => {
@@ -14,17 +14,24 @@ const Chatfooter = () => {
     }
   };
   return (
-    <div className="border flex mb-3 w-100">
-      <form action="" onSubmit={submitFormHandler}>
-        <input
-          className="border border-gray-500 font text-lg font-medium "
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </div>
+    <form
+      action=""
+      onSubmit={submitFormHandler}
+      className="w-full flex h-16 gap-3 mb-2"
+    >
+      <input
+        className="border border-gray-500 font text-lg font-medium flex-grow rounded-md"
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <button
+        type="submit"
+        className="w-48 borde bg-slate-700 text-white text-xl rounded-md"
+      >
+        Send
+      </button>
+    </form>
   );
 };
 
