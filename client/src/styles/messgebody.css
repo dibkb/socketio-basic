@@ -1,0 +1,21 @@
+.message__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 1rem;
+}
+.message__block {
+  border: 1px solid #303030;
+  background-color: #303030;
+  border-radius: 6px;
+  padding: 0.2rem;
+}
+.message__block__own {
+  border: 1px solid #3a79ff;
+  background-color: #3a79ff;
+  border-radius: 6px;
+  padding: 0.2rem;
+  text-align: right;
+  width: fit-content;
+  align-self: flex-end;
+}

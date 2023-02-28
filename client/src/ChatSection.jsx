@@ -6,12 +6,14 @@ const ChatSection = ({ socket }) => {
   const [allMessages, setAllMessages] = useState([]);
   const submitFormHandler = (e) => {
     e.preventDefault();
-    socket.emit("message", {
-      text: message,
-      sender: userName,
-      socketID: socket.id,
-    });
-    setMessage("");
+    if (message !== "") {
+      socket.emit("message", {
+        text: message,
+        sender: userName,
+        socketID: socket.id,
+      });
+      setMessage("");
+    }
   };
   useEffect(() => {
     socket.on("messageResponse", (data) => {

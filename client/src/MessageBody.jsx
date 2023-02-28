@@ -1,29 +1,19 @@
 import React from "react";
-
+import "./styles/messgebody.css";
 const MessageBody = ({ messages }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
   const content = messages.map((message, index) => {
     return (
       <div
-        style={{
-          border: "1px solid #303030",
-          padding: ".5rem",
-        }}
+        className={
+          userName === message.sender ? "message__block__own" : message__block
+        }
       >
         {message.text}
       </div>
     );
   });
-  return (
-    <div
-      style={{
-        // border: "1px solid #747474",
-        padding: "1rem",
-      }}
-    >
-      {content}
-    </div>
-  );
+  return <div className="message__body">{content}</div>;
 };
 
 export default MessageBody;
