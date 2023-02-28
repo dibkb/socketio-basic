@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/messgebody.css";
+// import "./styles/messgebody.css";
 const MessageBody = ({ messages }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
   const content = messages.map((message, index) => {
@@ -13,7 +13,12 @@ const MessageBody = ({ messages }) => {
       </div>
     );
   });
-  return <div className="message__body">{content}</div>;
+  return (
+    <div className="flex-grow">
+      {content}
+      message body
+    </div>
+  );
 };
 
 export default MessageBody;
