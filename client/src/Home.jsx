@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
-  const [username, setUsername] = useState();
   const navigate = useNavigate();
+  // if username exists navigate to chat
+  useEffect(() => {
+    const userName = localStorage.getItem("username");
+    if (userName) navigate("/chat");
+  }, []);
+  const [username, setUsername] = useState();
   const submitFormHandler = (e) => {
     e.preventDefault();
     if (username !== "") {
