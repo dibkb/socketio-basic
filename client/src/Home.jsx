@@ -16,17 +16,23 @@ const Home = () => {
     } else return;
   };
   const form = (
-    <form action="submit" onSubmit={submitFormHandler}>
+    <form action="submit" onSubmit={submitFormHandler} className="flex gap-4">
       <input
         type="text"
         placeholder="Enter username"
         onChange={(e) => setUsername(e.target.value)}
         value={username}
+        className="font-normal p-2 border border-gray-200 rounded-md"
       />
-      <button type="submit">Enter chat</button>
+      <button
+        type="submit"
+        className="bg-slate-700 text-white p-3 rounded-md font-medium"
+      >
+        Enter chat
+      </button>
     </form>
   );
-  return <div className="App">{form}</div>;
+  return <div className="flex">{form}</div>;
 };
 
 export default Home;

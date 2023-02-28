@@ -9,6 +9,9 @@
   background-color: #303030;
   border-radius: 6px;
   padding: 0.2rem;
+  text-align: left;
+  width: fit-content;
+  align-self: flex-start;
 }
 .message__block__own {
   border: 1px solid #3a79ff;
