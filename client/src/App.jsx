@@ -1,28 +1,15 @@
-import { useState } from "react";
-import { socket } from "./socket";
+// import { socket } from "./socket";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Home from "./Home";
+import ChatSection from "./ChatSection";
+// const socket = socketIO.connect("http://localhost:8080");
 function App() {
-  const [username, setUsername] = useState("");
-  const submitFormHandler = (e) => {
-    e.preventDefault();
-    if (username !== "") {
-      socket.auth = { username };
-      socket.connect();
-      socket.emit("send-message", username);
-    } else return;
-  };
   return (
-    <div className="App">
-      <form action="submit" onSubmit={submitFormHandler}>
-        <input
-          type="text"
-          placeholder="Enter username"
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-        />
-        <button type="submit">Enter chat</button>
-      </form>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/chat" element={<ChatSection />} />
+    </Routes>
   );
 }
 
