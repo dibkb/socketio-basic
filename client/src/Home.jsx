@@ -16,7 +16,11 @@ const Home = () => {
     } else return;
   };
   const form = (
-    <form action="submit" onSubmit={submitFormHandler} className="flex gap-4">
+    <form
+      action="submit"
+      onSubmit={submitFormHandler}
+      className="mx-auto flex gap-4 h-fit my-auto"
+    >
       <input
         type="text"
         placeholder="Enter username"
@@ -32,7 +36,7 @@ const Home = () => {
       </button>
     </form>
   );
-  return <div className="flex">{form}</div>;
+  return <div className="flex h-96">{form}</div>;
 };
 
 export default Home;
