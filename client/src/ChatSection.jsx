@@ -24,10 +24,9 @@ const ChatSection = () => {
       setAllMessages([...allMessages, data]);
     });
   }, [socket, allMessages]);
-  useEffect(() => {}, [socket, users]);
   return (
     <div className="flex h-screen">
-      <Chatbar users={users} />
+      <Chatbar socket={socket} />
       <div className="flex flex-col h-screen w-full">
         <MessageBody messages={allMessages} />
         <Chatfooter socket={socket} />

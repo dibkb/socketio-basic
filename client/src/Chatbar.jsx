@@ -1,14 +1,20 @@
-import React from "react";
-const Chatbar = ({ users }) => {
+import React, { useEffect } from "react";
+const Chatbar = ({ socket }) => {
   const loggedIn = localStorage.getItem("username");
+  const [users, setUsers] = React.useState([]);
+  useEffect(() => {
+    socket.on("connectedUsers", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
   const usersList = users.map((user, id) => {
-    if (loggedIn !== user.username) {
+    if (loggedIn !== user.userName) {
       return (
         <span
-          key={id}
+          key={user.userID}
           className="bg-blue-100 py-3 text-center rounded-lg cursor-pointer"
         >
-          {user.username}
+          {user.userName}
         </span>
       );
     }

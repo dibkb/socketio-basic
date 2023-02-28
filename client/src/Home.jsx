@@ -7,12 +7,11 @@ const Home = () => {
     const userName = localStorage.getItem("username");
     if (userName) navigate("/chat");
   }, []);
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("");
   const submitFormHandler = (e) => {
     e.preventDefault();
     if (username !== "") {
       localStorage.setItem("username", username);
-      // socket.emit("newUser", { username, socketID: socket.id });
       navigate("/chat");
     } else return;
   };

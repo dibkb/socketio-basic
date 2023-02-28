@@ -6,13 +6,19 @@ const MessageBody = ({ messages }) => {
     if (userName === message.sender) {
       // own message
       return (
-        <div className="bg-blue-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-end">
+        <div
+          key={index}
+          className="bg-blue-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-end"
+        >
           {message.text}
         </div>
       );
     } else {
       return (
-        <div className="bg-slate-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-start flex flex-col">
+        <div
+          key={index}
+          className="bg-slate-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-start flex flex-col"
+        >
           <small className="text-slate-400 text-xs font-thin">
             {message.sender}
           </small>
