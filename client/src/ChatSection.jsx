@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Chatbar from "./Chatbar";
 import Chatfooter from "./Chatfooter";
 import MessageBody from "./MessageBody";
 const ChatSection = ({ socket }) => {
-  const [userName] = useState(localStorage.getItem("username"));
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userName = localStorage.getItem("username");
+    if (!userName) return navigate("/");
+  }, []);
   const [message, setMessage] = useState("");
   const [allMessages, setAllMessages] = useState([]);
   useEffect(() => {
     socket.on("messageResponse", (data) => {
-      console.log(data);
       setAllMessages([...allMessages, data]);
     });
   }, [socket, allMessages]);
@@ -17,7 +21,7 @@ const ChatSection = ({ socket }) => {
       <Chatbar />
       <div className="flex flex-col h-screen w-full">
         <MessageBody messages={allMessages} />
-        <Chatfooter />
+        <Chatfooter socket={socket} />
       </div>
     </div>
   );
