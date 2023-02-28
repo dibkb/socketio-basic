@@ -1,16 +1,22 @@
+import { io } from "socket.io-client";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Chatbar from "./Chatbar";
 import Chatfooter from "./Chatfooter";
 import MessageBody from "./MessageBody";
-const ChatSection = ({ socket }) => {
+// ----------socket-------------
+const URL = "http://localhost:8080";
+const ChatSection = () => {
   const navigate = useNavigate();
+  const [userName] = useState(localStorage.getItem("username"));
   useEffect(() => {
-    const userName = localStorage.getItem("username");
     if (!userName) return navigate("/");
-    else {
-    }
   }, []);
+  const socket = io.connect(URL, {
+    query: {
+      userName,
+    },
+  });
   const [users, setUsers] = useState([]);
   const [allMessages, setAllMessages] = useState([]);
   useEffect(() => {
@@ -18,10 +24,7 @@ const ChatSection = ({ socket }) => {
       setAllMessages([...allMessages, data]);
     });
   }, [socket, allMessages]);
-  useEffect(() => {
-    socket.on("newUserResponse", (data) => setUsers(data));
-    console.log("user response");
-  }, [socket, users]);
+  useEffect(() => {}, [socket, users]);
   return (
     <div className="flex h-screen">
       <Chatbar users={users} />

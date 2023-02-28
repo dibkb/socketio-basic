@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-const Home = ({ socket }) => {
+const Home = () => {
   const navigate = useNavigate();
   // if username exists navigate to chat
   useEffect(() => {
@@ -12,7 +12,7 @@ const Home = ({ socket }) => {
     e.preventDefault();
     if (username !== "") {
       localStorage.setItem("username", username);
-      socket.emit("newUser", { username, socketID: socket.id });
+      // socket.emit("newUser", { username, socketID: socket.id });
       navigate("/chat");
     } else return;
   };
