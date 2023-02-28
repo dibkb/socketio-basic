@@ -1,15 +1,16 @@
-// import { socket } from "./socket";
+import { io } from "socket.io-client";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
 import ChatSection from "./ChatSection";
-// const socket = socketIO.connect("http://localhost:8080");
-// adding global email
+// ----------socket-------------
+const URL = "http://localhost:8080";
+const socket = io.connect(URL);
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/chat" element={<ChatSection />} />
+      <Route path="/chat" element={<ChatSection socket={socket} />} />
     </Routes>
   );
 }
