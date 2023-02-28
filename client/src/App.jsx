@@ -4,6 +4,7 @@ import "./App.css";
 import Home from "./Home";
 import ChatSection from "./ChatSection";
 // const socket = socketIO.connect("http://localhost:8080");
+// adding global username
 function App() {
   return (
     <Routes>
