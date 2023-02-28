@@ -17,6 +17,7 @@ const ChatSection = ({ socket }) => {
   };
   useEffect(() => {
     socket.on("messageResponse", (data) => {
+      console.log(data);
       setAllMessages([...allMessages, data]);
     });
   }, [socket, allMessages]);

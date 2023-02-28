@@ -6,7 +6,7 @@ const MessageBody = ({ messages }) => {
     return (
       <div
         className={
-          userName === message.sender ? "message__block__own" : message__block
+          userName === message.sender ? "message__block__own" : "message__block"
         }
       >
         {message.text}
