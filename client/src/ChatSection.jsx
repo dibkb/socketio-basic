@@ -22,16 +22,23 @@ const ChatSection = () => {
     userName: "group",
   });
   const [allMessages, setAllMessages] = useState([]);
+  const [privateAllMessages, setPrivateAllMessages] = useState([]);
   useEffect(() => {
+    console.log(allMessages);
+    console.log(privateAllMessages);
     socket.on("messageResponse", (data) => {
       setAllMessages([...allMessages, data]);
+      setPrivateAllMessages([...privateAllMessages, data]);
     });
   }, [socket, allMessages]);
   useEffect(() => {
+    console.log(allMessages);
+    console.log(privateAllMessages);
     socket.on("private__message__incoming", (data) => {
-      console.log(data);
+      // setAllMessages([...allMessages, data]);
+      setPrivateAllMessages([...privateAllMessages, data]);
     });
-  }, [socket]);
+  }, [socket, privateAllMessages]);
   return (
     <div className="flex h-screen">
       <Chatbar socket={socket} select={selectUser} setSelect={setSelectUser} />

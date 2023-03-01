@@ -26,12 +26,16 @@ io.on("connection", (socket) => {
   socket.on("message", (data) => {
     io.emit("messageResponse", data);
   });
-  socket.on("private__message", ({ text, senderId, to }) => {
-    console.log(text, senderId, to);
+  socket.on("private__message", ({ text, sender, senderId, to }) => {
+    // io.to(to.id).emit("private__message__incoming", {
+    //   text,
+    //   from: { id: senderId, userName: sender },
+    //   to,
+    // });
     io.to(to.id).emit("private__message__incoming", {
       text,
-      from: socket.id,
-      to,
+      sender,
+      to: to.userName,
     });
   });
 
