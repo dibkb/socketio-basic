@@ -5,11 +5,7 @@ const Chatbar = ({ socket }) => {
   useEffect(() => {
     socket.on("totalUsers", (data) => {
       console.log(data);
-      // data.forEach((user) => {
-      //   if (socket.id !== user.userID) {
-      //     setUsers([...users, user]);
-      //   }
-      // });
+      setUsers(data);
     });
   }, [socket]);
   const usersList = users.map((user, id) => {
