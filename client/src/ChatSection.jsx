@@ -9,20 +9,21 @@ const URL = "http://localhost:8080";
 const ChatSection = () => {
   const navigate = useNavigate();
   const [userName] = useState(localStorage.getItem("username"));
-  const [room] = useState(localStorage.getItem("room"));
+  // const [room] = useState(localStorage.getItem("room"));
   useEffect(() => {
     if (!userName) return navigate("/");
   }, []);
   const socket = io(URL, {
     query: {
       userName,
-      room,
+      // room,
     },
   });
   const [selectUser, setSelectUser] = useState({
     id: 0,
-    userName: "group",
+    userName: "general",
   });
+  const [selectRoom, setSelectRoom] = useState({});
   const [allMessages, setAllMessages] = useState([]);
   const [privateAllMessages, setPrivateAllMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -42,7 +43,13 @@ const ChatSection = () => {
   }, [arrivalMessage]);
   return (
     <div className="flex h-screen">
-      <Chatbar socket={socket} select={selectUser} setSelect={setSelectUser} />
+      <Chatbar
+        socket={socket}
+        select={selectUser}
+        setSelect={setSelectUser}
+        selectRoom={selectRoom}
+        setSelectRoom={setSelectRoom}
+      />
       <div className="flex flex-col h-screen w-full">
         <MessageBody
           messages={allMessages}

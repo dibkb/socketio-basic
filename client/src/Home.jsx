@@ -32,7 +32,7 @@ const Home = () => {
       />
       <input
         type="text"
-        placeholder="Enter room"
+        placeholder="Enter username"
         onChange={(e) => setRoom(e.target.value)}
         value={room}
         className="font-normal p-2 border border-gray-200 rounded-md"

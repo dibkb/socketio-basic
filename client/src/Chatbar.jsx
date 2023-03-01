@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-const Chatbar = ({ socket, select, setSelect }) => {
+const Chatbar = ({ socket, select, setSelect, selectRoom, setSelectRoom }) => {
   const loggedIn = localStorage.getItem("username");
   const [users, setUsers] = React.useState([]);
+  const [rooms, setRooms] = React.useState([]);
   useEffect(() => {
     socket.on("totalUsers", (data) => {
       setUsers(data);
+    });
+    socket.on("allRooms", (data) => {
+      setRooms(data);
     });
   }, [socket]);
   const usersList = users.map((user, id) => {
@@ -47,13 +51,29 @@ const Chatbar = ({ socket, select, setSelect }) => {
       onClick={() => {
         setSelect({
           id: 0,
-          userName: "group",
+          userName: "general",
         });
       }}
     >
       General Lounge
     </span>
   );
+  const roomList = rooms.map((user, id) => {
+    return (
+      <span
+        key={user.id}
+        className="bg-cyan-800 py-3 text-center rounded-lg cursor-pointer text-white"
+        onClick={() => {
+          setSelect({
+            id: user.id,
+            userName: user.userName,
+          });
+        }}
+      >
+        # {user.userName}
+      </span>
+    );
+  });
   return (
     <div className="w-1/3 border border-gray-500 p-2">
       <span className="flex justify-between items-center">
@@ -63,6 +83,7 @@ const Chatbar = ({ socket, select, setSelect }) => {
       <div className="flex flex-col gap-2 mt-4">
         {lounge}
         {usersList}
+        {roomList}
       </div>
     </div>
   );

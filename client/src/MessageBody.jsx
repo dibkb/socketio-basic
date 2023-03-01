@@ -71,7 +71,7 @@ const MessageBody = ({ messages, selectUser, privateAllMessages }) => {
   return (
     <div className="flex-grow flex flex-col p-4">
       <span className="text-xl font-semibold">Welcome {userName}</span>
-      {selectUser.userName === "group" ? content : privateMessage}
+      {selectUser.userName === "general" ? content : privateMessage}
     </div>
   );
 };
