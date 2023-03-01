@@ -29,7 +29,7 @@ const MessageBody = ({ messages }) => {
   });
   return (
     <div className="flex-grow flex flex-col p-4">
-      <span className="text-xl font-semibold">Loged in as : {userName}</span>
+      <span className="text-xl font-semibold">Welcome {userName}</span>
       {content}
     </div>
   );
