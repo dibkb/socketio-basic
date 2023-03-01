@@ -37,12 +37,15 @@ const ChatSection = () => {
   useEffect(() => {
     setPrivateAllMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
-  console.log(privateAllMessages);
   return (
     <div className="flex h-screen">
       <Chatbar socket={socket} select={selectUser} setSelect={setSelectUser} />
       <div className="flex flex-col h-screen w-full">
-        <MessageBody messages={allMessages} selectUser={selectUser} />
+        <MessageBody
+          messages={allMessages}
+          selectUser={selectUser}
+          privateAllMessages={privateAllMessages}
+        />
         <Chatfooter socket={socket} selectUser={selectUser} />
       </div>
     </div>

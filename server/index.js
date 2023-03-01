@@ -32,6 +32,11 @@ io.on("connection", (socket) => {
       sender,
       to: to.userName,
     });
+    io.to(senderId).emit("private__message__incoming", {
+      text,
+      sender,
+      to: to.userName,
+    });
   });
 
   socket.on("disconnect", () => {
