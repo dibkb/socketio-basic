@@ -1,9 +1,9 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import { users, addNewUser, removeUser } from "./users.js";
 const app = express();
 const server = http.createServer(app);
-let users = [];
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
@@ -19,28 +19,20 @@ io.use((socket, next) => {
 });
 io.on("connection", (socket) => {
   console.log("🥂 conncetion extablised");
+  // add new user
+  addNewUser({ id: socket.id, userName: socket.userName });
+  // emit usersList
+  io.emit("totalUsers", users);
   socket.on("message", (data) => {
-    console.log(data);
     io.emit("messageResponse", data);
   });
-  for (let [id, socket] of io.of("/").sockets) {
-    users.push({
-      userID: id,
-      userName: socket.userName,
-    });
-  }
-  // ---------------broadcast connected users------------------
-  socket.broadcast.emit("connectedUsers", users);
-  // socket.on("newUser", (data) => {
-  //   users.push(data);
-  //   console.log(data);
-  //   io.emit("newUserResponse", users);
-  // });
+
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");
-    console.log(users);
-    users = users.filter((user) => user.userID !== socket.id);
-    io.emit("newUserResponse", users);
+    // remove user from list
+    removeUser(socket.id);
+    // emit new usersList
+    io.emit("totalUsers", users);
     socket.disconnect();
   });
 });

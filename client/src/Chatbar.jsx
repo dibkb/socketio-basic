@@ -3,8 +3,13 @@ const Chatbar = ({ socket }) => {
   const loggedIn = localStorage.getItem("username");
   const [users, setUsers] = React.useState([]);
   useEffect(() => {
-    socket.on("connectedUsers", (data) => {
+    socket.on("totalUsers", (data) => {
       console.log(data);
+      // data.forEach((user) => {
+      //   if (socket.id !== user.userID) {
+      //     setUsers([...users, user]);
+      //   }
+      // });
     });
   }, [socket]);
   const usersList = users.map((user, id) => {

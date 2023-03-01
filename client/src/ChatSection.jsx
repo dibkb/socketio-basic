@@ -12,7 +12,7 @@ const ChatSection = () => {
   useEffect(() => {
     if (!userName) return navigate("/");
   }, []);
-  const socket = io.connect(URL, {
+  const socket = io(URL, {
     query: {
       userName,
     },
