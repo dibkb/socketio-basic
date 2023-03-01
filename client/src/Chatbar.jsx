@@ -41,6 +41,19 @@ const Chatbar = ({ socket, select, setSelect }) => {
         );
     }
   });
+  const lounge = (
+    <span
+      className="bg-lime-300 py-3 text-center rounded-lg cursor-pointer font-medium"
+      onClick={() => {
+        setSelect({
+          id: 0,
+          userName: "group",
+        });
+      }}
+    >
+      General Lounge
+    </span>
+  );
   return (
     <div className="w-1/3 border border-gray-500 p-2">
       <span className="flex justify-between items-center">
@@ -48,18 +61,8 @@ const Chatbar = ({ socket, select, setSelect }) => {
         <button className="bg-red-600 p-1 text-white rounded-md">Logout</button>
       </span>
       <div className="flex flex-col gap-2 mt-4">
+        {lounge}
         {usersList}
-        <span
-          className="bg-green-500 py-3 text-center rounded-lg cursor-pointer"
-          onClick={() => {
-            setSelect({
-              id: 0,
-              userName: "group",
-            });
-          }}
-        >
-          group
-        </span>
       </div>
     </div>
   );

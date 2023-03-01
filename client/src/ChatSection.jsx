@@ -9,12 +9,14 @@ const URL = "http://localhost:8080";
 const ChatSection = () => {
   const navigate = useNavigate();
   const [userName] = useState(localStorage.getItem("username"));
+  const [room] = useState(localStorage.getItem("room"));
   useEffect(() => {
     if (!userName) return navigate("/");
   }, []);
   const socket = io(URL, {
     query: {
       userName,
+      room,
     },
   });
   const [selectUser, setSelectUser] = useState({
@@ -24,6 +26,7 @@ const ChatSection = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [privateAllMessages, setPrivateAllMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  // =====================join room============================
   useEffect(() => {
     socket.on("messageResponse", (data) => {
       setAllMessages([...allMessages, data]);

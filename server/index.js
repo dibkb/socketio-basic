@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import { rooms } from "./rooms.js";
 import { users, addNewUser, removeUser } from "./users.js";
 const app = express();
 const server = http.createServer(app);
@@ -10,11 +11,12 @@ const io = new Server(server, {
   },
 });
 io.use((socket, next) => {
-  const { userName } = socket.handshake.query;
+  const { userName, room } = socket.handshake.query;
   if (!userName) {
     return next(new Error("invalid username"));
   }
   socket.userName = userName;
+  socket.room = room;
   next();
 });
 io.on("connection", (socket) => {
@@ -23,6 +25,8 @@ io.on("connection", (socket) => {
   addNewUser({ id: socket.id, userName: socket.userName });
   // emit usersList
   io.emit("totalUsers", users);
+  // emmit all rooms
+  io.emit("allRooms", rooms);
   socket.on("message", (data) => {
     io.emit("messageResponse", data);
   });
