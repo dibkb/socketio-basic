@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 const MessageBody = ({ messages, selectUser, privateAllMessages }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
   const [showMessage, setShowMessage] = useState([]);
-  console.log(privateAllMessages);
   useEffect(() => {
     // show message between user and selectYSwer
     setShowMessage(
@@ -47,11 +46,32 @@ const MessageBody = ({ messages, selectUser, privateAllMessages }) => {
       );
     }
   });
-  const privateMessage = showMessage.map((message, index) => {});
+  const privateMessage = showMessage.map((message, index) => {
+    if (userName === message.sender) {
+      // own message
+      return (
+        <div
+          key={index}
+          className="bg-blue-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-end"
+        >
+          {message.text}
+        </div>
+      );
+    } else {
+      return (
+        <div
+          key={index}
+          className="bg-slate-600 text-lg w-fit px-4 py-1 rounded-lg text-white my-1 self-start flex flex-col"
+        >
+          <span>{message.text}</span>
+        </div>
+      );
+    }
+  });
   return (
     <div className="flex-grow flex flex-col p-4">
       <span className="text-xl font-semibold">Welcome {userName}</span>
-      {selectUser.userName === "group" ? content : []}
+      {selectUser.userName === "group" ? content : privateMessage}
     </div>
   );
 };
