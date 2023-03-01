@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import "./styles/messgebody.css";
-const MessageBody = ({ messages, selectUser }) => {
+const MessageBody = ({ messages, selectUser, privateAllMessages }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
   const [showMessage, setShowMessage] = useState([]);
   // useEffect(() => {
@@ -38,7 +38,9 @@ const MessageBody = ({ messages, selectUser }) => {
   return (
     <div className="flex-grow flex flex-col p-4">
       <span className="text-xl font-semibold">Welcome {userName}</span>
-      {selectUser.userName === "group" ? content : JSON.stringify(showMessage)}
+      {selectUser.userName === "group"
+        ? content
+        : JSON.stringify(privateAllMessages)}
     </div>
   );
 };
