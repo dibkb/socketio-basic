@@ -12,25 +12,39 @@ const ChatSection = () => {
   useEffect(() => {
     if (!userName) return navigate("/");
   }, []);
-  const socket = io.connect(URL, {
+  const socket = io(URL, {
     query: {
       userName,
     },
   });
-  const [users, setUsers] = useState([]);
+  const [selectUser, setSelectUser] = useState({
+    id: 0,
+    userName: "group",
+  });
   const [allMessages, setAllMessages] = useState([]);
+  const [privateAllMessages, setPrivateAllMessages] = useState([]);
   useEffect(() => {
+    console.log(allMessages);
+    console.log(privateAllMessages);
     socket.on("messageResponse", (data) => {
       setAllMessages([...allMessages, data]);
+      setPrivateAllMessages([...privateAllMessages, data]);
     });
   }, [socket, allMessages]);
-  useEffect(() => {}, [socket, users]);
+  useEffect(() => {
+    console.log(allMessages);
+    console.log(privateAllMessages);
+    socket.on("private__message__incoming", (data) => {
+      // setAllMessages([...allMessages, data]);
+      setPrivateAllMessages([...privateAllMessages, data]);
+    });
+  }, [socket, privateAllMessages]);
   return (
     <div className="flex h-screen">
-      <Chatbar users={users} />
+      <Chatbar socket={socket} select={selectUser} setSelect={setSelectUser} />
       <div className="flex flex-col h-screen w-full">
-        <MessageBody messages={allMessages} />
-        <Chatfooter socket={socket} />
+        <MessageBody messages={allMessages} selectUser={selectUser} />
+        <Chatfooter socket={socket} selectUser={selectUser} />
       </div>
     </div>
   );
