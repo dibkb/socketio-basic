@@ -1,15 +1,24 @@
 import React from "react";
-const Chatfooter = ({ socket }) => {
+const Chatfooter = ({ socket, selectUser }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
   const [message, setMessage] = React.useState("");
   const submitFormHandler = (e) => {
     e.preventDefault();
     if (message !== "") {
-      socket.emit("message", {
-        text: message,
-        sender: userName,
-        socketID: socket.id,
-      });
+      if (selectUser.userName === "group")
+        socket.emit("message", {
+          text: message,
+          sender: userName,
+          socketID: socket.id,
+        });
+      else {
+        socket.emit("private__message", {
+          text: message,
+          sender: userName,
+          senderId: socket.id,
+          to: selectUser,
+        });
+      }
       setMessage("");
     }
   };

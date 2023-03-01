@@ -26,6 +26,14 @@ io.on("connection", (socket) => {
   socket.on("message", (data) => {
     io.emit("messageResponse", data);
   });
+  socket.on("private__message", ({ text, senderId, to }) => {
+    console.log(text, senderId, to);
+    io.to(to.id).emit("private__message__incoming", {
+      text,
+      from: socket.id,
+      to,
+    });
+  });
 
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");

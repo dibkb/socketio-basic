@@ -17,19 +17,27 @@ const ChatSection = () => {
       userName,
     },
   });
-  const [users, setUsers] = useState([]);
+  const [selectUser, setSelectUser] = useState({
+    id: 0,
+    userName: "group",
+  });
   const [allMessages, setAllMessages] = useState([]);
   useEffect(() => {
     socket.on("messageResponse", (data) => {
       setAllMessages([...allMessages, data]);
     });
   }, [socket, allMessages]);
+  useEffect(() => {
+    socket.on("private__message__incoming", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
   return (
     <div className="flex h-screen">
-      <Chatbar socket={socket} />
+      <Chatbar socket={socket} select={selectUser} setSelect={setSelectUser} />
       <div className="flex flex-col h-screen w-full">
-        <MessageBody messages={allMessages} />
-        <Chatfooter socket={socket} />
+        <MessageBody messages={allMessages} selectUser={selectUser} />
+        <Chatfooter socket={socket} selectUser={selectUser} />
       </div>
     </div>
   );

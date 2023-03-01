@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import "./styles/messgebody.css";
-const MessageBody = ({ messages }) => {
+const MessageBody = ({ messages, selectUser }) => {
   const [userName] = React.useState(localStorage.getItem("username"));
+  // ------------ group message---------------------
   const content = messages.map((message, index) => {
     if (userName === message.sender) {
       // own message
@@ -30,7 +31,7 @@ const MessageBody = ({ messages }) => {
   return (
     <div className="flex-grow flex flex-col p-4">
       <span className="text-xl font-semibold">Welcome {userName}</span>
-      {content}
+      {selectUser.userName === "group" ? content : selectUser.userName}
     </div>
   );
 };
