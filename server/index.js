@@ -27,12 +27,12 @@ io.on("connection", (socket) => {
     io.emit("messageResponse", data);
   });
   socket.on("private__message", ({ text, sender, senderId, to }) => {
-    // io.to(to.id).emit("private__message__incoming", {
-    //   text,
-    //   from: { id: senderId, userName: sender },
-    //   to,
-    // });
     io.to(to.id).emit("private__message__incoming", {
+      text,
+      sender,
+      to: to.userName,
+    });
+    io.to(senderId).emit("private__message__incoming", {
       text,
       sender,
       to: to.userName,

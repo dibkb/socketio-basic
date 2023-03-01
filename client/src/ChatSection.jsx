@@ -23,27 +23,29 @@ const ChatSection = () => {
   });
   const [allMessages, setAllMessages] = useState([]);
   const [privateAllMessages, setPrivateAllMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   useEffect(() => {
-    console.log(allMessages);
-    console.log(privateAllMessages);
     socket.on("messageResponse", (data) => {
       setAllMessages([...allMessages, data]);
-      setPrivateAllMessages([...privateAllMessages, data]);
     });
   }, [socket, allMessages]);
   useEffect(() => {
-    console.log(allMessages);
-    console.log(privateAllMessages);
     socket.on("private__message__incoming", (data) => {
-      // setAllMessages([...allMessages, data]);
-      setPrivateAllMessages([...privateAllMessages, data]);
+      setArrivalMessage(data);
     });
-  }, [socket, privateAllMessages]);
+  }, [socket]);
+  useEffect(() => {
+    setPrivateAllMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
   return (
     <div className="flex h-screen">
       <Chatbar socket={socket} select={selectUser} setSelect={setSelectUser} />
       <div className="flex flex-col h-screen w-full">
-        <MessageBody messages={allMessages} selectUser={selectUser} />
+        <MessageBody
+          messages={allMessages}
+          selectUser={selectUser}
+          privateAllMessages={privateAllMessages}
+        />
         <Chatfooter socket={socket} selectUser={selectUser} />
       </div>
     </div>
