@@ -42,6 +42,15 @@ io.on("connection", (socket) => {
       to: to.userName,
     });
   });
+  // ================ room message=======================
+  socket.on("room__message", ({ text, sender, senderId, room }) => {
+    socket.join(room);
+    socket.broadcast.to(room).emit("room__message__incoming", {
+      text,
+      sender,
+      room,
+    });
+  });
 
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");

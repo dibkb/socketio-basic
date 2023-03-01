@@ -1,9 +1,5 @@
 export const rooms = [
   {
-    id: 0,
-    userName: "general",
-  },
-  {
     id: 1,
     userName: "happy",
   },

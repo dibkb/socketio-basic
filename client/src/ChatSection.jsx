@@ -27,7 +27,14 @@ const ChatSection = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [privateAllMessages, setPrivateAllMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [roomMessage, setRoomMessage] = useState([]);
   // =====================join room============================
+  useEffect(() => {
+    socket.on("room__message__incoming", (data) => {
+      setRoomMessage((prev) => [...prev, data]);
+    });
+  }, [socket]);
+  console.log(roomMessage);
   useEffect(() => {
     socket.on("messageResponse", (data) => {
       setAllMessages([...allMessages, data]);
