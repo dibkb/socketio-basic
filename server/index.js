@@ -45,6 +45,12 @@ io.on("connection", (socket) => {
       to: to.userName,
     });
   });
+  // --------------- join room-----------------
+  socket.on("join__room", ({ room }) => {
+    socket.leave(currRoom);
+    socket.join(room);
+    currRoom = room;
+  });
   // ================ room message=======================
   socket.on("room__message", ({ text, sender, senderId, room }) => {
     socket.to(room).emit("room__message__incoming", {
@@ -53,6 +59,7 @@ io.on("connection", (socket) => {
       senderId,
       room,
     });
+    socket.leave(room);
     // socket.leave(room);
     // io.in("happy").emit("room__message__incoming", {
     //   text,
