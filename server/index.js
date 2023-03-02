@@ -60,12 +60,6 @@ io.on("connection", (socket) => {
       room,
     });
     socket.leave(room);
-    // socket.leave(room);
-    // io.in("happy").emit("room__message__incoming", {
-    //   text,
-    //   sender,
-    //   room,
-    // });
   });
 
   socket.on("disconnect", () => {
