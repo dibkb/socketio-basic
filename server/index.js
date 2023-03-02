@@ -22,14 +22,18 @@ io.use((socket, next) => {
 io.on("connection", (socket) => {
   console.log("🥂 conncetion extablised");
   // add new user
+  socket.join("happy");
+  console.log("joined happy");
   addNewUser({ id: socket.id, userName: socket.userName });
   // emit usersList
   io.emit("totalUsers", users);
   // emmit all rooms
   io.emit("allRooms", rooms);
+  //-------------------------------------------- geneal message-------------------------
   socket.on("message", (data) => {
     io.emit("messageResponse", data);
   });
+  //-------------------------------------------- private message-------------------------
   socket.on("private__message", ({ text, sender, senderId, to }) => {
     io.to(to.id).emit("private__message__incoming", {
       text,
@@ -44,12 +48,17 @@ io.on("connection", (socket) => {
   });
   // ================ room message=======================
   socket.on("room__message", ({ text, sender, senderId, room }) => {
-    socket.join(room);
-    socket.broadcast.to(room).emit("room__message__incoming", {
+    socket.in("happy").emit("room__message__incoming", {
       text,
       sender,
+      senderId,
       room,
     });
+    // io.in("happy").emit("room__message__incoming", {
+    //   text,
+    //   sender,
+    //   room,
+    // });
   });
 
   socket.on("disconnect", () => {

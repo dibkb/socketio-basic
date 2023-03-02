@@ -31,10 +31,10 @@ const ChatSection = () => {
   // =====================join room============================
   useEffect(() => {
     socket.on("room__message__incoming", (data) => {
-      setRoomMessage((prev) => [...prev, data]);
+      // setRoomMessage((prev) => [...prev, data]);
+      console.log(data);
     });
   }, [socket]);
-  console.log(roomMessage);
   useEffect(() => {
     socket.on("messageResponse", (data) => {
       setAllMessages([...allMessages, data]);
