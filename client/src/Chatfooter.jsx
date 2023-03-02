@@ -5,18 +5,28 @@ const Chatfooter = ({ socket, selectUser }) => {
   const submitFormHandler = (e) => {
     e.preventDefault();
     if (message !== "") {
-      if (selectUser.userName === "group")
+      // --------------------- general chat-------------------------
+      if (selectUser.userName === "general")
         socket.emit("message", {
           text: message,
           sender: userName,
           socketID: socket.id,
         });
-      else {
+      // --------------------- Private chat-------------------------
+      if (selectUser.user && !selectUser.room) {
         socket.emit("private__message", {
           text: message,
           sender: userName,
           senderId: socket.id,
           to: selectUser,
+        });
+        // --------------------- Group chat-------------------------
+      } else if (selectUser.room && !selectUser.user) {
+        socket.emit("room__message", {
+          text: message,
+          sender: userName,
+          senderId: socket.id,
+          room: selectUser.userName,
         });
       }
       setMessage("");
