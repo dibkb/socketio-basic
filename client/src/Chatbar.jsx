@@ -11,6 +11,22 @@ const Chatbar = ({ socket, select, setSelect }) => {
       setRooms(data);
     });
   }, [socket]);
+  const selectUserHandler = (user) => {
+    setSelect({
+      id: user.id,
+      userName: user.userName,
+      room: false,
+      user: true,
+    });
+  };
+  const selectRoomHandler = (user) => {
+    setSelect({
+      id: user.id,
+      userName: user.userName,
+      room: true,
+      user: false,
+    });
+  };
   const usersList = users.map((user, id) => {
     if (loggedIn !== user.userName) {
       if (select?.id === user.id) {
@@ -18,12 +34,7 @@ const Chatbar = ({ socket, select, setSelect }) => {
           <span
             key={user.id}
             className="bg-blue-600 py-3 text-center rounded-lg cursor-pointer text-white"
-            onClick={() => {
-              setSelect({
-                id: user.id,
-                userName: user.userName,
-              });
-            }}
+            onClick={() => selectUserHandler(user)}
           >
             {user.userName}
           </span>
@@ -33,12 +44,7 @@ const Chatbar = ({ socket, select, setSelect }) => {
           <span
             key={user.id}
             className="bg-blue-100 py-3 text-center rounded-lg cursor-pointer"
-            onClick={() => {
-              setSelect({
-                id: user.id,
-                userName: user.userName,
-              });
-            }}
+            onClick={() => selectUserHandler(user)}
           >
             {user.userName}
           </span>
@@ -64,12 +70,7 @@ const Chatbar = ({ socket, select, setSelect }) => {
         <span
           key={user.id}
           className="bg-blue-900 py-3 text-center rounded-lg cursor-pointer text-white"
-          onClick={() => {
-            setSelect({
-              id: user.id,
-              userName: user.userName,
-            });
-          }}
+          onClick={() => selectRoomHandler(user)}
         >
           # {user.userName}
         </span>
@@ -79,12 +80,7 @@ const Chatbar = ({ socket, select, setSelect }) => {
         <span
           key={user.id}
           className="bg-cyan-800 py-3 text-center rounded-lg cursor-pointer text-white"
-          onClick={() => {
-            setSelect({
-              id: user.id,
-              userName: user.userName,
-            });
-          }}
+          onClick={() => selectRoomHandler(user)}
         >
           # {user.userName}
         </span>

@@ -19,11 +19,10 @@ io.use((socket, next) => {
   socket.room = room;
   next();
 });
+let currRoom = "";
 io.on("connection", (socket) => {
   console.log("🥂 conncetion extablised");
   // add new user
-  socket.join("happy");
-  console.log("joined happy");
   addNewUser({ id: socket.id, userName: socket.userName });
   // emit usersList
   io.emit("totalUsers", users);
@@ -48,12 +47,13 @@ io.on("connection", (socket) => {
   });
   // ================ room message=======================
   socket.on("room__message", ({ text, sender, senderId, room }) => {
-    socket.in("happy").emit("room__message__incoming", {
+    socket.to(room).emit("room__message__incoming", {
       text,
       sender,
       senderId,
       room,
     });
+    // socket.leave(room);
     // io.in("happy").emit("room__message__incoming", {
     //   text,
     //   sender,

@@ -23,7 +23,7 @@ const Chatfooter = ({ socket, selectUser }) => {
         text: message,
         sender: userName,
         senderId: socket.id,
-        room: "happy",
+        room: selectUser.userName,
       });
       setMessage("");
     }
