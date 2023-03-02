@@ -31,8 +31,13 @@ const ChatSection = () => {
   // =====================join room============================
   useEffect(() => {
     socket.on("room__message__incoming", (data) => {
-      // setRoomMessage((prev) => [...prev, data]);
-      console.log(data);
+      // console.log("socket", socket.id);
+      // console.log("sender", data.senderId);
+      console.log(data.senderId === socket.id);
+      if (socket.id === data.senderId) {
+      } else {
+        setRoomMessage((prev) => [...prev, data]);
+      }
     });
   }, [socket]);
   useEffect(() => {
@@ -60,6 +65,7 @@ const ChatSection = () => {
       <div className="flex flex-col h-screen w-full">
         <MessageBody
           messages={allMessages}
+          roomMessage={roomMessage}
           selectUser={selectUser}
           privateAllMessages={privateAllMessages}
         />
