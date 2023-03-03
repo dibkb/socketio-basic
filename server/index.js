@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import { randomUUID } from "crypto";
 import { rooms } from "./rooms.js";
 import { users, addNewUser, removeUser } from "./users.js";
 const app = express();
@@ -32,10 +33,11 @@ io.on("connection", (socket) => {
 
   //-------------------------------------------- geneal message-------------------------
   socket.on("message", (data) => {
-    io.emit("messageResponse", data);
+    io.emit("messageResponse", { ...data });
   });
   //-------------------------------------------- private message-------------------------
   socket.on("private__message", ({ text, sender, senderId, to }) => {
+    console.log(to.id);
     io.to(to.id).emit("private__message__incoming", {
       text,
       sender,

@@ -26,41 +26,41 @@ const ChatSection = () => {
   const [selectRoom, setSelectRoom] = useState({});
   const [allMessages, setAllMessages] = useState([]);
   const [privateAllMessages, setPrivateAllMessages] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [arrivalPrivateMessage, setArrivalPrivateMessage] = useState(null);
-  const [arrivalRoomMessage, setArrivalRoomMessage] = useState(null);
+  // const [arrivalMessage, setArrivalMessage] = useState(null);
+  // const [arrivalPrivateMessage, setArrivalPrivateMessage] = useState(null);
+  // const [arrivalRoomMessage, setArrivalRoomMessage] = useState(null);
   const [roomMessage, setRoomMessage] = useState([]);
   // =====================join room============================
   // ---------------------------update room message---------------------
   useEffect(() => {
     socket.on("room__message__incoming", (data) => {
-      setArrivalRoomMessage(data);
+      // setArrivalRoomMessage(data);
+      setRoomMessage([...roomMessage, data]);
     });
-  }, [socket]);
-  useEffect(() => {
-    if (arrivalRoomMessage === null) return;
-    setRoomMessage((prev) => [...prev, arrivalRoomMessage]);
-  }, [arrivalRoomMessage]);
-  // ---------------------------update group message---------------------
-  useEffect(() => {
     socket.on("messageResponse", (data) => {
-      setArrivalMessage(data);
+      setAllMessages([...allMessages, data]);
     });
-  }, [socket]);
-  useEffect(() => {
-    if (arrivalMessage === null) return;
-    setAllMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage]);
-  // ---------------------------update private message---------------------
-  useEffect(() => {
     socket.on("private__message__incoming", (data) => {
-      setArrivalPrivateMessage(data);
+      console.log(data);
+      setPrivateAllMessages((prev) => [...prev, data]);
     });
-  }, [socket]);
-  useEffect(() => {
-    if (arrivalPrivateMessage === null) return;
-    setPrivateAllMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalPrivateMessage]);
+  }, [socket, roomMessage, allMessages, privateAllMessages]);
+  console.log(privateAllMessages);
+  // useEffect(() => {
+  //   if (arrivalRoomMessage === null) return;
+  //   setRoomMessage((prev) => [...prev, arrivalRoomMessage]);
+  // }, [arrivalRoomMessage]);
+  // // ---------------------------update group message---------------------
+  // useEffect(() => {
+  //   if (arrivalMessage === null) return;
+  //   // console.log(arrivalMessage);
+  //   setAllMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage]);
+  // // ---------------------------update private message---------------------
+  // useEffect(() => {
+  //   if (arrivalPrivateMessage === null) return;
+  //   setPrivateAllMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalPrivateMessage]);
   return (
     <div className="flex h-screen">
       <Chatbar
