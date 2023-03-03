@@ -16,7 +16,7 @@ const ChatSection = () => {
   const socket = io(URL, {
     query: {
       userName,
-      // room,
+      room: "happy",
     },
   });
   const [selectUser, setSelectUser] = useState({
@@ -31,17 +31,15 @@ const ChatSection = () => {
   // =====================join room============================
   useEffect(() => {
     socket.on("room__message__incoming", (data) => {
-      // console.log("socket", socket.id);
-      // console.log("sender", data.senderId);
-      console.log(data.senderId === socket.id);
-      if (socket.id === data.senderId) {
-      } else {
-        setRoomMessage((prev) => [...prev, data]);
-      }
+      // console.log("room__message__incoming", data);
+      // if (data.senderId !== socket.id)
+      setRoomMessage([...roomMessage, data]);
     });
-  }, [socket]);
+  }, [socket, roomMessage]);
+  // console.log(roomMessage);
   useEffect(() => {
     socket.on("messageResponse", (data) => {
+      // console.log("messageResponse", data);
       setAllMessages([...allMessages, data]);
     });
   }, [socket, allMessages]);

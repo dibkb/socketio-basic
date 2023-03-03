@@ -26,9 +26,10 @@ const Chatbar = ({ socket, select, setSelect }) => {
       room: true,
       user: false,
     });
-    socket.emit("join__room", {
-      room: user.userName,
-    });
+    // socket.emit("leave_room");
+    // socket.emit("join__room", {
+    //   room: user.userName,
+    // });
   };
   const usersList = users.map((user, id) => {
     if (loggedIn !== user.userName) {

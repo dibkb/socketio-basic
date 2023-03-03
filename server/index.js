@@ -28,6 +28,8 @@ io.on("connection", (socket) => {
   io.emit("totalUsers", users);
   // emmit all rooms
   io.emit("allRooms", rooms);
+  socket.join(["happy", "sad", "funny"]);
+
   //-------------------------------------------- geneal message-------------------------
   socket.on("message", (data) => {
     io.emit("messageResponse", data);
@@ -46,22 +48,21 @@ io.on("connection", (socket) => {
     });
   });
   // --------------- join room-----------------
-  socket.on("join__room", ({ room }) => {
-    socket.leave(currRoom);
-    socket.join(room);
-    currRoom = room;
-  });
+  // socket.on("join__room", ({ room }) => {
+  //   socket.leave(currRoom);
+  //   socket.join(room);
+  //   currRoom = room;
+  // });
+  // console.log(socket.rooms);
   // ================ room message=======================
   socket.on("room__message", ({ text, sender, senderId, room }) => {
-    socket.to(room).emit("room__message__incoming", {
+    io.to(room).emit("room__message__incoming", {
       text,
       sender,
       senderId,
       room,
     });
-    socket.leave(room);
   });
-
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");
     // remove user from list
@@ -69,6 +70,7 @@ io.on("connection", (socket) => {
     // emit new usersList
     io.emit("totalUsers", users);
     socket.disconnect();
+    socket.leave(["happy", "sad", "funny"]);
   });
 });
 
