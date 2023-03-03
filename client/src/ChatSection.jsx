@@ -16,7 +16,7 @@ const ChatSection = () => {
   const socket = io(URL, {
     query: {
       userName,
-      // room,
+      room: "happy",
     },
   });
   const [selectUser, setSelectUser] = useState({
@@ -27,32 +27,40 @@ const ChatSection = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [privateAllMessages, setPrivateAllMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [arrivalPrivateMessage, setArrivalPrivateMessage] = useState(null);
+  const [arrivalRoomMessage, setArrivalRoomMessage] = useState(null);
   const [roomMessage, setRoomMessage] = useState([]);
   // =====================join room============================
+  // ---------------------------update room message---------------------
   useEffect(() => {
     socket.on("room__message__incoming", (data) => {
-      // console.log("socket", socket.id);
-      // console.log("sender", data.senderId);
-      console.log(data.senderId === socket.id);
-      if (socket.id === data.senderId) {
-      } else {
-        setRoomMessage((prev) => [...prev, data]);
-      }
+      setArrivalRoomMessage(data);
     });
   }, [socket]);
   useEffect(() => {
-    socket.on("messageResponse", (data) => {
-      setAllMessages([...allMessages, data]);
-    });
-  }, [socket, allMessages]);
+    if (arrivalRoomMessage === null) return;
+    setRoomMessage((prev) => [...prev, arrivalRoomMessage]);
+  }, [arrivalRoomMessage]);
+  // ---------------------------update group message---------------------
   useEffect(() => {
-    socket.on("private__message__incoming", (data) => {
+    socket.on("messageResponse", (data) => {
       setArrivalMessage(data);
     });
   }, [socket]);
   useEffect(() => {
-    setPrivateAllMessages((prev) => [...prev, arrivalMessage]);
+    if (arrivalMessage === null) return;
+    setAllMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
+  // ---------------------------update private message---------------------
+  useEffect(() => {
+    socket.on("private__message__incoming", (data) => {
+      setArrivalPrivateMessage(data);
+    });
+  }, [socket]);
+  useEffect(() => {
+    if (arrivalPrivateMessage === null) return;
+    setPrivateAllMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalPrivateMessage]);
   return (
     <div className="flex h-screen">
       <Chatbar

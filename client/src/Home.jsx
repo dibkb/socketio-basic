@@ -13,7 +13,6 @@ const Home = () => {
     e.preventDefault();
     if (username !== "") {
       localStorage.setItem("username", username);
-      localStorage.setItem("room", room);
       navigate("/chat");
     } else return;
   };
